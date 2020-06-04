@@ -4,11 +4,11 @@ import TodoList from "./components/TodoList";
 import './components/Todo.css';
 
 
-const todos = [
-  {task: "Enter First Task",
-  id: 1,
-  completed: false}
-]
+const todos = [{
+  task: "Make a todo-list",
+  id: Date.now(),
+  completed: false
+}];
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -24,14 +24,16 @@ class App extends React.Component {
 
   addTodo = (e, newTask) =>{
     e.preventDefault();
-    const newTodo = {
-      task: newTask,
-      id: Date.now(),
-      completed: false
+    if(newTask !== ""){
+      const newTodo = {
+        task: newTask,
+        id: Date.now(),
+        completed: false
+      };
+      this.setState({
+        todos: [...this.state.todos, newTodo]
+      });
     };
-    this.setState({
-      todos: [...this.state.todos, newTodo]
-    });
   };
 
   toggleTask = id =>{
@@ -48,17 +50,29 @@ class App extends React.Component {
     })
   }
 
+  clearCompleted = e => {
+    e.preventDefault();
+    this.setState({
+      todos: this.state.todos.filter(task => !task.completed)
+    });
+  }; 
+
   render() {
     return (
-      <div> 
-        <div>
+      <div className = "body"> 
+        <div className = "page">
           <h2>Welcome to your Todo App!</h2>
           <h4>Add your Todo's</h4>
-          <TodoForm addTodo = {this.addTodo}></TodoForm>
+          <TodoForm 
+            addTodo = {this.addTodo}
+            clearCompleted = {this.clearCompleted}
+          />
+          <TodoList 
+            todos = {this.state.todos}
+            toggleTask = {this.toggleTask} 
+          />
         </div>
-        <TodoList 
-          todos = {this.state.todos}
-          toggleTask = {this.toggleTask} />
+        
       </div>
     );
   }

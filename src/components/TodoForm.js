@@ -14,8 +14,7 @@ class TodoForm extends React.Component {
 
     submitTask = e =>{
         e.preventDefault();
-        this.setState({ task:"" });
-        this.props.addTodo( e, this.state.task );
+        {this.props.addTodo( e, this.state.task )};
     }
 
     render(){
@@ -27,7 +26,8 @@ class TodoForm extends React.Component {
                     name = "task"
                     onChange = {this.handleChanges}
                 />
-                <button>Add</button>
+                <button className = "add">Add</button>
+                <button className = "clear" onClick = {this.props.clearCompleted}>Clear Completed</button>
 
             </form>
         )
