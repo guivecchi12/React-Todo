@@ -14,6 +14,7 @@ class TodoForm extends React.Component {
 
     submitTask = e =>{
         e.preventDefault();
+        this.setState({ task: '' });
         {this.props.addTodo( e, this.state.task )};
     }
 
